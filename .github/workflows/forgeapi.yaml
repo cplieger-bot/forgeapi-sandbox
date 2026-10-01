@@ -1,0 +1,31 @@
+name: forgeapi
+
+# The forgeapi live lane's own CI on this sandbox: one job that passes and one that
+# fails, on a push to a branch named forgeapi-ci-* and on a manual dispatch, and
+# nothing on a push to main. The lane lists these runs and re-runs the failed job.
+
+on:
+  push:
+    branches:
+      - "forgeapi-ci-*"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  passing:
+    name: passing
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Pass
+        run: echo "This job passes on purpose."
+  failing:
+    name: failing
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Fail
+        run: |
+          echo "This job fails on purpose."
+          exit 1
